@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import AnimatedBackground from './AnimatedBackground';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [headerRef, headerVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [gridRef, gridVisible] = useScrollAnimation({ threshold: 0.1 });
 
   const slides = [
     {
@@ -49,12 +52,18 @@ const HeroSection = () => {
   return (
     <section className="hero-section">
       <AnimatedBackground />
-      <div className="Members-header">
+      <div 
+        ref={headerRef}
+        className={`members-header ${headerVisible ? 'animate-in' : 'animate-out'}`}
+      >
         <h1>MEMBERS</h1>
         <p className="members-subtitle">Descubre nuestras mejores soluciones</p>
       </div>
       
-      <div className="carousels-grid">
+      <div 
+        ref={gridRef}
+        className={`carousels-grid ${gridVisible ? 'animate-in' : 'animate-out'}`}
+      >
         {slides.map((slide, index) => (
           <div key={slide.id} className="single-carousel">
             <div className="product-card">

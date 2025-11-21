@@ -81,11 +81,11 @@ const AnimatedBackground = () => {
         particle.x += particle.speedX;
         particle.y += particle.speedY;
         
-        // Rebote en los bordes
+     
         if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
         if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
         
-        // Dibujar partícula
+        
         ctx.save();
         ctx.globalAlpha = particle.opacity;
         ctx.fillStyle = particle.color;

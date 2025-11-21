@@ -74,7 +74,7 @@
   pointer-events: none;
 }
 
-.stores-header {
+.members-header {
   text-align: center;
   margin-bottom: 3rem;
   padding: 2rem;
@@ -83,9 +83,22 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  animation: fadeInDown 1.2s ease-out;
+  transform-origin: center;
+  transition: all 0.6s ease;
 }
 
-.stores-header h1 {
+.members-header.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.members-header.animate-out {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+}
+
+.members-header h1 {
   font-size: 3.5rem;
   font-weight: 900;
   color: #ffffff;
@@ -100,16 +113,19 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: glow 2s ease-in-out infinite alternate;
+  animation: glow 3s ease-in-out infinite alternate, letterFloat 0.8s ease-out;
+  transform-origin: center;
 }
 
-.stores-subtitle {
+.members-subtitle {
   font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.8);
   margin: 0;
   font-weight: 300;
   letter-spacing: 2px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1.5s ease-out 0.3s both;
+  transform-origin: center;
 }
 
 @keyframes glow {
@@ -127,17 +143,93 @@
   }
 }
 
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes letterFloat {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes cardPulse {
+  0% {
+    transform: translateY(-15px) scale(1.03);
+  }
+  50% {
+    transform: translateY(-18px) scale(1.05);
+  }
+  100% {
+    transform: translateY(-15px) scale(1.03);
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
 .carousels-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 2rem;
   height: auto;
   align-items: center;
   justify-items: center;
+  transition: all 0.8s ease;
+}
+
+.carousels-grid.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.carousels-grid.animate-out {
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 .single-carousel {
@@ -146,12 +238,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: slideInUp 0.8s ease-out both;
+}
+
+.single-carousel:nth-child(1) {
+  animation-delay: 0.2s;
+}
+
+.single-carousel:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.single-carousel:nth-child(3) {
+  animation-delay: 0.6s;
 }
 
 .product-card {
   width: 100%;
-  max-width: 350px;
-  height: 450px;
+  max-width: 380px;
+  height: 500px;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(15px);
   border-radius: 20px;
@@ -180,17 +285,18 @@
 }
 
 .product-card:hover {
-  transform: translateY(-10px) scale(1.02);
+  transform: translateY(-15px) scale(1.03);
   box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(102, 126, 234, 0.2),
+    0 25px 50px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(102, 126, 234, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
-  border-color: rgba(102, 126, 234, 0.3);
+  border-color: rgba(102, 126, 234, 0.4);
+  animation: cardPulse 0.6s ease-in-out;
 }
 
 .card-image-container {
   position: relative;
-  height: 280px;
+  height: 320px;
   overflow: hidden;
   background: white;
   display: block;
@@ -223,7 +329,7 @@
   justify-content: space-between;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
-  height: 170px;
+  height: 180px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -269,11 +375,31 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.card-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+  align-self: flex-start;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: floating 3s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
 .card-button:hover {
   background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.6);
   border-color: rgba(255, 255, 255, 0.4);
+  animation: none;
 }
 
 
@@ -287,16 +413,16 @@
     padding-top: 2rem;
   }
 
-  .stores-header {
+  .members-header {
     margin-bottom: 2rem;
     padding: 1.5rem;
   }
 
-  .stores-header h1 {
+  .members-header h1 {
     font-size: 2.5rem;
   }
 
-  .stores-subtitle {
+  .members-subtitle {
     font-size: 1rem;
   }
 
@@ -318,16 +444,16 @@
   .product-card {
     max-width: 100%;
     width: 100%;
-    height: 400px;
+    height: 450px;
   }
 
   .card-image-container {
-    height: 240px;
+    height: 280px;
   }
 
   .card-content {
     padding: 1.2rem;
-    height: 160px;
+    height: 170px;
   }
 
   .card-title {
@@ -351,17 +477,17 @@
     padding-top: 1rem;
   }
 
-  .stores-header {
+  .members-header {
     margin-bottom: 1.5rem;
     padding: 1rem;
   }
 
-  .stores-header h1 {
+  .members-header h1 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
   }
 
-  .stores-subtitle {
+  .members-subtitle {
     font-size: 0.9rem;
   }
 
@@ -374,15 +500,15 @@
   .product-card {
     max-width: 100%;
     width: 100%;
-    height: 350px;
+    height: 400px;
   }
 
   .card-image-container {
-    height: 200px;
+    height: 240px;
   }
 
   .card-content {
-    height: 150px;
+    height: 160px;
     padding: 1rem;
   }
 
@@ -407,12 +533,12 @@
     padding: 0.3rem;
   }
 
-  .stores-header {
+  .members-header {
     padding: 0.8rem;
     margin-bottom: 1rem;
   }
 
-  .stores-header h1 {
+  .members-header h1 {
     font-size: 1.8rem;
   }
 
@@ -422,11 +548,11 @@
   }
 
   .product-card {
-    height: 320px;
+    height: 360px;
   }
 
   .card-image-container {
-    height: 180px;
+    height: 220px;
   }
 
   .card-content {
